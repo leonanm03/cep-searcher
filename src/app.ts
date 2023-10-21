@@ -14,7 +14,7 @@ app.use(cors()).use(express.json())
 // .use(routes).use(handleApplicationErrors)
 
 export async function init(): Promise<Express> {
-    // connectDb()
+    connectDb()
     return Promise.resolve(app)
 }
 
