@@ -1,6 +1,6 @@
 import { AnySchema } from 'yup'
 import { Request, Response, NextFunction } from 'express'
-import { invalidDataError } from '@/errors/invalid-data-error'
+import { invalidDataError } from '@/errors'
 
 export function validate(schema: AnySchema) {
     return async (

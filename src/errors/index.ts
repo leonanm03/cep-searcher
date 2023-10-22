@@ -1,2 +1,5 @@
 export * from './duplicated-email-error'
 export * from './duplicated-cpf-error'
+export * from './invalid-data-error'
+export * from './request-error'
+export * from './address-not-found-error'
