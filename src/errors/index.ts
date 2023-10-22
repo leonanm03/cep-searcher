@@ -1,1 +1,1 @@
-// errors
+export * from './duplicated-email-error'
