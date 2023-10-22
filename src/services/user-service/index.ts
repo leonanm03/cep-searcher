@@ -1,7 +1,7 @@
 import { User } from '@prisma/client'
 import bcrypt from 'bcrypt'
 import { userRepository } from '@/repositories'
-import { duplicatedEmailError } from '@/errors'
+import { duplicatedCpfError, duplicatedEmailError } from '@/errors'
 
 export type CreateUserParams = Omit<
     User,
@@ -15,6 +15,7 @@ export async function createUser({
     cpf
 }: CreateUserParams) {
     await validateUniqueEmailOrFail(email)
+    await validateUniqueCpfOrFail(cpf)
 
     const hashedPassword = await bcrypt.hash(password, 12)
     const user = await userRepository.create({
@@ -36,6 +37,13 @@ async function validateUniqueEmailOrFail(email: string) {
     const userWithSameEmail = await userRepository.findByEmail(email)
     if (userWithSameEmail) {
         throw duplicatedEmailError()
+    }
+}
+
+async function validateUniqueCpfOrFail(cpf: string) {
+    const userWithSameCpf = await userRepository.findByCpf(cpf)
+    if (userWithSameCpf) {
+        throw duplicatedCpfError()
     }
 }
 

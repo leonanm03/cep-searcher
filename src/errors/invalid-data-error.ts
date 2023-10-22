@@ -4,7 +4,7 @@ export function invalidDataError(
     details: string[]
 ): ApplicationInvalidateDataError {
     return {
-        name: 'InvalidDataError',
+        name: 'BadRequestError',
         message: 'Invalid data',
         details
     }

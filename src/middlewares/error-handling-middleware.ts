@@ -9,7 +9,7 @@ export function handleApplicationErrors(
     _next: NextFunction
 ) {
     switch (err.name) {
-        case 'InvalidDataError':
+        case 'BadRequestError':
             return res.status(httpStatus.BAD_REQUEST).send({
                 error: err.name,
                 message: err.message,
