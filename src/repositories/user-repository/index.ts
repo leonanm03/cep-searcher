@@ -35,8 +35,23 @@ async function findById(id: number, select?: Prisma.UserSelect) {
     return prisma.user.findUnique(params)
 }
 
+async function findByCpf(cpf: string, select?: Prisma.UserSelect) {
+    const params: Prisma.UserFindUniqueArgs = {
+        where: {
+            cpf
+        }
+    }
+
+    if (select) {
+        params.select = select
+    }
+
+    return prisma.user.findUnique(params)
+}
+
 export const userRepository = {
     findByEmail,
     create,
-    findById
+    findById,
+    findByCpf
 }
