@@ -12,6 +12,7 @@ export function validate(schema: AnySchema) {
             await schema.validate(req.body, { abortEarly: false })
             next()
         } catch (error) {
+            console.error(error.errors)
             throw invalidDataError(error.errors)
         }
     }
