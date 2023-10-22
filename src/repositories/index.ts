@@ -1,1 +1,1 @@
-// repositories
+export * from './user-repository'
