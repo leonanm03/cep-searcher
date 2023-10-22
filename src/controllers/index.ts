@@ -1,1 +1,1 @@
-// controllers
+export * from './user-controller'

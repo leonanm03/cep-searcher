@@ -13,16 +13,23 @@ export async function createUser({
     email,
     password,
     cpf
-}: CreateUserParams): Promise<User> {
+}: CreateUserParams) {
     await validateUniqueEmailOrFail(email)
 
     const hashedPassword = await bcrypt.hash(password, 12)
-    return userRepository.create({
+    const user = await userRepository.create({
         name,
         email,
         password: hashedPassword,
         cpf
     })
+
+    return {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        cpf: user.cpf
+    }
 }
 
 async function validateUniqueEmailOrFail(email: string) {

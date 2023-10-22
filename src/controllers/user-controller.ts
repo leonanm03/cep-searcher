@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 import httpStatus from 'http-status'
 import { CreateUserParams, userService } from '@/services'
 
-export async function usersPost(
+export async function userPost(
     req: Request,
     res: Response,
     next: NextFunction
@@ -11,10 +11,7 @@ export async function usersPost(
 
     try {
         const user = await userService.createUser(body)
-        return res.status(httpStatus.CREATED).json({
-            id: user.id,
-            email: user.email
-        })
+        return res.status(httpStatus.CREATED).send(user)
     } catch (error) {
         next(error)
     }
