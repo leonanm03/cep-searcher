@@ -1,7 +1,7 @@
 import { addressNotFoundError } from '@/errors'
-import { ViaCepResponse } from '@/protocols'
-import { searchRepository } from '@/repositories'
+import { cepRepository, searchRepository } from '@/repositories'
 import { request } from '@/utils'
+import { cepService } from '../cep-service'
 
 export type NewSearchInput = {
     userId: number
@@ -10,42 +10,23 @@ export type NewSearchInput = {
     feedback?: string
 }
 
-async function getAddressFromViaCEP(cep: string): Promise<ViaCepResponse> {
-    const result = await request.get(`${process.env.VIA_CEP_URL}/${cep}/json`)
-
-    if (!result.data || result.data.erro) {
-        throw addressNotFoundError()
-    }
-
-    const { bairro, localidade, uf, complemento, logradouro } = result.data
-
-    const address: ViaCepResponse = {
-        bairro,
-        cidade: localidade,
-        uf,
-        complemento,
-        logradouro
-    }
-
-    return address
-}
-
 async function newSearch(data: NewSearchInput) {
-    const alreadySearched = await searchRepository.findByCep(data.cep)
+    const cep = await cepService.searchCep(data.cep)
+    const record = await searchRepository.newSeach({
+        userId: data.userId,
+        cep: cep.cep,
+        rating: data.rating,
+        feedback: data.feedback
+    })
 
-    if (alreadySearched) {
-        const newSeacrh = await searchRepository.newSeach(data)
-
-        return newSeacrh
-    } else {
-        await getAddressFromViaCEP(data.cep)
-        const newSeacrh = await searchRepository.newSeach(data)
-
-        return newSeacrh
+    return {
+        data: {
+            cep,
+            record
+        }
     }
 }
 
 export const searchService = {
-    getAddressFromViaCEP,
     newSearch
 }
