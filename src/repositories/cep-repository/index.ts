@@ -20,7 +20,19 @@ async function findByCep(cep: string, select?: Prisma.CepSelect) {
 
     return prisma.cep.findUnique(params)
 }
+
+async function findMany(select?: Prisma.CepSelect) {
+    const params: Prisma.CepFindManyArgs = {}
+
+    if (select) {
+        params.select = select
+    }
+
+    return prisma.cep.findMany(params)
+}
+
 export const cepRepository = {
     create,
-    findByCep
+    findByCep,
+    findMany
 }

@@ -28,6 +28,11 @@ async function searchCep(cep: string) {
     }
 }
 
+async function findMany() {
+    return cepRepository.findMany()
+}
+
 export const cepService = {
-    searchCep
+    searchCep,
+    findMany
 }

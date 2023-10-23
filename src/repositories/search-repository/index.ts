@@ -1,7 +1,7 @@
 import { Prisma } from '@prisma/client'
 import { prisma } from '@/config'
 
-async function newSeach(data: Prisma.SearchUncheckedCreateInput) {
+async function newSearch(data: Prisma.SearchUncheckedCreateInput) {
     return prisma.search.create({
         data
     })
@@ -50,7 +50,7 @@ async function findManyByUserId(userId: number, select?: Prisma.SearchSelect) {
 }
 
 export const searchRepository = {
-    newSeach,
+    newSearch,
     findById,
     findByCep,
     findManyByUserId

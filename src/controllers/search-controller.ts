@@ -21,3 +21,18 @@ export async function searchCep(
         next(error)
     }
 }
+
+export async function mySearchs(
+    req: Request,
+    res: Response,
+    next: NextFunction
+) {
+    const { userId } = req.body as { userId: number }
+
+    try {
+        const response = await searchService.mySearchs(userId)
+        return res.status(httpStatus.OK).send(response)
+    } catch (error) {
+        next(error)
+    }
+}
