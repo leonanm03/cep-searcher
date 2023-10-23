@@ -4,11 +4,16 @@ export type ApplicationError = {
 }
 
 export type ViaCepResponse = {
+    cep: string
     logradouro: string
     complemento: string
     bairro: string
-    cidade: string
+    localidade: string
     uf: string
+    ibge: string
+    gia: string
+    ddd: string
+    siafi: string
     error?: string
 }
 
