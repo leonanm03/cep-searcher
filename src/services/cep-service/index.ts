@@ -17,7 +17,6 @@ async function getAddressFromViaCEP(cep: string) {
 
 async function searchCep(cep: string) {
     const alreadySearched = await cepRepository.findByCep(cep)
-    console.log(alreadySearched)
 
     if (alreadySearched) {
         return alreadySearched

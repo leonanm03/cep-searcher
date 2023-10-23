@@ -4,23 +4,19 @@ import { cepService } from '../cep-service'
 export type NewSearchInput = {
     userId: number
     cep: string
-    rating: number
-    feedback?: string
 }
 
 async function newSearch(data: NewSearchInput) {
     const cep = await cepService.searchCep(data.cep)
-    const record = await searchRepository.newSeach({
+    const search = await searchRepository.newSeach({
         userId: data.userId,
-        cep: cep.cep,
-        rating: data.rating,
-        feedback: data.feedback
+        cep: cep.cep
     })
 
     return {
         data: {
             cep,
-            record
+            search
         }
     }
 }

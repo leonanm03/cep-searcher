@@ -1,9 +1,7 @@
 import { object, string, number } from 'yup'
 
 export const newSearchBodySchema = object({
-    userId: number().strict().required('User ID is required'),
-    rating: number().strict().required('Rating is required'),
-    feedback: string().strict().notRequired()
+    userId: number().strict().required('User ID is required')
 })
 
 export const newSearchParamsSchema = object({
