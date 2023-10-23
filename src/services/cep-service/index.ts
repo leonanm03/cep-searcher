@@ -17,12 +17,13 @@ async function getAddressFromViaCEP(cep: string) {
 
 async function searchCep(cep: string) {
     const alreadySearched = await cepRepository.findByCep(cep)
+    console.log(alreadySearched)
 
     if (alreadySearched) {
         return alreadySearched
     } else {
         const response = await getAddressFromViaCEP(cep)
-        const newSeacrh = await cepRepository.create(response)
+        const newSeacrh = await cepRepository.create({ ...response, cep })
 
         return newSeacrh
     }

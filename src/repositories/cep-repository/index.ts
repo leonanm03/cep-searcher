@@ -8,6 +8,7 @@ async function create(data: Prisma.CepUncheckedCreateInput) {
 }
 
 async function findByCep(cep: string, select?: Prisma.CepSelect) {
+    console.log('entrou no findByCep', cep)
     const params: Prisma.CepFindUniqueArgs = {
         where: {
             cep
@@ -18,7 +19,9 @@ async function findByCep(cep: string, select?: Prisma.CepSelect) {
         params.select = select
     }
 
-    return prisma.cep.findUnique(params)
+    const result = await prisma.cep.findUnique(params)
+    console.log('result', result)
+    return result
 }
 export const cepRepository = {
     create,

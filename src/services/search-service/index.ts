@@ -1,6 +1,4 @@
-import { addressNotFoundError } from '@/errors'
-import { cepRepository, searchRepository } from '@/repositories'
-import { request } from '@/utils'
+import { searchRepository } from '@/repositories'
 import { cepService } from '../cep-service'
 
 export type NewSearchInput = {
