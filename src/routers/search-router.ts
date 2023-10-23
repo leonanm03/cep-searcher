@@ -1,7 +1,11 @@
 import { mySearchs, searchCep } from '@/controllers'
 import { listCeps } from '@/controllers/cep-controller'
 import { validateBody, validateParams } from '@/middlewares'
-import { newSearchBodySchema, newSearchParamsSchema } from '@/schemas'
+import {
+    mySearchsBodySchema,
+    newSearchBodySchema,
+    newSearchParamsSchema
+} from '@/schemas'
 import { Router } from 'express'
 
 const searchRouter = Router()
@@ -13,7 +17,7 @@ searchRouter
         validateBody(newSearchBodySchema),
         searchCep
     )
-    .get('/my-searchs', mySearchs)
+    .get('/my-searchs', validateBody(mySearchsBodySchema), mySearchs)
     .get('/', listCeps)
 
 export { searchRouter }
