@@ -28,7 +28,23 @@ model Search {
     cep       String
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-    rating    Int
+    rating    Int?
     feedback  String?
     user      User     @relation(fields: [userId], references: [id])
+}
+
+model Cep {
+    id          Int      @id @default(autoincrement())
+    cep         String   @unique
+    logradouro  String?
+    complemento String?
+    bairro      String?
+    localidade  String?
+    uf          String?
+    ibge        String?
+    gia         String?
+    ddd         String?
+    siafi       String?
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
 }

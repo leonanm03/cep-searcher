@@ -22,6 +22,18 @@ export function handleApplicationErrors(
                 message: err.message
             })
 
+        case 'NotFoundError':
+            return res.status(httpStatus.NOT_FOUND).send({
+                error: err.name,
+                message: err.message
+            })
+
+        case 'TooManyRequestsError':
+            return res.status(httpStatus.TOO_MANY_REQUESTS).send({
+                error: err.name,
+                message: err.message
+            })
+
         default:
             console.error(err)
             return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({
