@@ -24,3 +24,15 @@ export type RequestError = {
     name: string
     message: string
 }
+
+export type NewSearchInput = {
+    userId: number
+    cep: string
+}
+
+export type rateSearchInput = {
+    userId: number
+    searchId: number
+    rating: number
+    feedback?: string
+}

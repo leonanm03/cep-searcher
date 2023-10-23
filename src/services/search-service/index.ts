@@ -1,11 +1,7 @@
 import { searchRepository } from '@/repositories'
 import { cepService } from '../cep-service'
-import { searchLimitError } from '@/errors'
-
-export type NewSearchInput = {
-    userId: number
-    cep: string
-}
+import { searchLimitError, searchNotFoundError } from '@/errors'
+import { NewSearchInput, rateSearchInput } from '@/protocols'
 
 async function newSearch(data: NewSearchInput) {
     const todaySearchAmount = await searchRepository.userTodaySearchAmount(
@@ -35,7 +31,27 @@ async function mySearchs(userId: number) {
     return searchs
 }
 
+async function rateSearch({
+    rating,
+    searchId,
+    userId,
+    feedback
+}: rateSearchInput) {
+    const search = await searchRepository.findByUserIdAndId(userId, searchId)
+    if (!search) {
+        throw searchNotFoundError()
+    }
+
+    const updatedSearch = await searchRepository.patch(searchId, {
+        rating,
+        feedback
+    })
+
+    return { updatedSearch, message: 'Thanks for your feedback!' }
+}
+
 export const searchService = {
     newSearch,
-    mySearchs
+    mySearchs,
+    rateSearch
 }

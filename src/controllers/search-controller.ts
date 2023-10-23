@@ -1,3 +1,4 @@
+import { rateSearchInput } from '@/protocols'
 import { searchService } from '@/services'
 import { NextFunction, Request, Response } from 'express'
 import httpStatus from 'http-status'
@@ -31,6 +32,25 @@ export async function mySearchs(
 
     try {
         const response = await searchService.mySearchs(userId)
+        return res.status(httpStatus.OK).send(response)
+    } catch (error) {
+        next(error)
+    }
+}
+
+export async function rateSearch(
+    req: Request,
+    res: Response,
+    next: NextFunction
+) {
+    const data = req.body as Omit<rateSearchInput, 'searchId'>
+    const { searchId } = req.params as { searchId: string }
+
+    try {
+        const response = await searchService.rateSearch({
+            ...data,
+            searchId: parseInt(searchId)
+        })
         return res.status(httpStatus.OK).send(response)
     } catch (error) {
         next(error)

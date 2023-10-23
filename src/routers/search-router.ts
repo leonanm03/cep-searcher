@@ -1,10 +1,11 @@
-import { mySearchs, searchCep } from '@/controllers'
-import { listCeps } from '@/controllers/cep-controller'
+import { listCeps, mySearchs, rateSearch, searchCep } from '@/controllers'
 import { validateBody, validateParams } from '@/middlewares'
 import {
     mySearchsBodySchema,
     newSearchBodySchema,
-    newSearchParamsSchema
+    newSearchParamsSchema,
+    rateSearchParamsSchema,
+    rateSearchbodySchema
 } from '@/schemas'
 import { Router } from 'express'
 
@@ -19,5 +20,11 @@ searchRouter
     )
     .get('/my-searchs', validateBody(mySearchsBodySchema), mySearchs)
     .get('/', listCeps)
+    .patch(
+        '/rate/:searchId',
+        validateParams(rateSearchParamsSchema),
+        validateBody(rateSearchbodySchema),
+        rateSearch
+    )
 
 export { searchRouter }

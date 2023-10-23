@@ -63,10 +63,40 @@ async function userTodaySearchAmount(userId: number) {
     })
 }
 
+async function findByUserIdAndId(
+    userId: number,
+    id: number,
+    select?: Prisma.SearchSelect
+) {
+    const params: Prisma.SearchFindFirstArgs = {
+        where: {
+            id,
+            userId
+        }
+    }
+
+    if (select) {
+        params.select = select
+    }
+
+    return prisma.search.findFirst(params)
+}
+
+async function patch(id: number, data: Prisma.SearchUncheckedUpdateInput) {
+    return prisma.search.update({
+        where: {
+            id
+        },
+        data
+    })
+}
+
 export const searchRepository = {
     newSearch,
     findById,
     findByCep,
     findManyByUserId,
-    userTodaySearchAmount
+    userTodaySearchAmount,
+    patch,
+    findByUserIdAndId
 }
