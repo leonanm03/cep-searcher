@@ -1,5 +1,6 @@
 import { searchRepository } from '@/repositories'
 import { cepService } from '../cep-service'
+import { searchLimitError } from '@/errors'
 
 export type NewSearchInput = {
     userId: number
@@ -7,6 +8,13 @@ export type NewSearchInput = {
 }
 
 async function newSearch(data: NewSearchInput) {
+    const todaySearchAmount = await searchRepository.userTodaySearchAmount(
+        data.userId
+    )
+    if (todaySearchAmount >= 10) {
+        throw searchLimitError()
+    }
+
     const cep = await cepService.searchCep(data.cep)
     const search = await searchRepository.newSearch({
         userId: data.userId,

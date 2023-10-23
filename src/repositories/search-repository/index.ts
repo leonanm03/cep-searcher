@@ -49,9 +49,24 @@ async function findManyByUserId(userId: number, select?: Prisma.SearchSelect) {
     return prisma.search.findMany(params)
 }
 
+async function userTodaySearchAmount(userId: number) {
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+    return await prisma.search.count({
+        where: {
+            userId,
+            createdAt: {
+                gte: today,
+                lt: new Date(today.getTime() + 1 * 24 * 60 * 60 * 1000)
+            }
+        }
+    })
+}
+
 export const searchRepository = {
     newSearch,
     findById,
     findByCep,
-    findManyByUserId
+    findManyByUserId,
+    userTodaySearchAmount
 }
